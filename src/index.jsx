@@ -1,6 +1,7 @@
 'use strict'
 
 var React  = require('react')
+var PropTypes = require('prop-types')
 
 var moment   = require('moment')
 var assign   = require('object-assign')
@@ -31,14 +32,14 @@ class DatePicker extends React.Component {
     static displayName = 'DatePicker';
 
     static propTypes = {
-        todayText: React.PropTypes.string,
-        gotoSelectedText: React.PropTypes.string,
+        todayText: PropTypes.string,
+        gotoSelectedText: PropTypes.string,
 
-        renderFooter: React.PropTypes.func,
-        onChange: React.PropTypes.func,
+        renderFooter: PropTypes.func,
+        onChange: PropTypes.func,
 
-        date: React.PropTypes.any,
-        viewDate: React.PropTypes.any
+        date: PropTypes.any,
+        viewDate: PropTypes.any
     };
 
     static defaultProps = function() {
@@ -464,7 +465,7 @@ class DatePicker extends React.Component {
 
 DatePicker.views = Views
 
-var PT = React.PropTypes
+var PT = PropTypes
 
 DatePicker.propTypes = {
 

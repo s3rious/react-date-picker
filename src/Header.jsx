@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react')
-var P = React.PropTypes
+var P = require('prop-types')
 var onEnter = require('./onEnter')
 
 module.exports = class extends React.Component {
