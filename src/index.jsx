@@ -176,12 +176,18 @@ class DatePicker extends React.Component {
         viewProps.onSelect = this.handleSelect
         viewProps.onChange = this.handleChange
 
+        var localView = view(viewProps)
+
+        if (typeof localView !== 'function' && localView.default) {
+          localView = localView.default
+        }
+
         return (
             <div {...this.props} className={className} style={props.style} >
                 {this.renderHeader(view, props)}
 
                 <div className="dp-body" style={{flex: 1}}>
-                    {view(viewProps)}
+                    {localView(viewProps)}
                 </div>
 
                 {this.renderFooter(props)}
