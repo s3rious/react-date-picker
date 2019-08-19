@@ -176,7 +176,7 @@ class DatePicker extends React.Component {
         viewProps.onSelect = this.handleSelect
         viewProps.onChange = this.handleChange
 
-        var localView = view(viewProps)
+        var localView = view
 
         if (typeof localView !== 'function' && localView.default) {
           localView = localView.default
