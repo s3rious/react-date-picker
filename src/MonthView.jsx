@@ -194,13 +194,12 @@ class MonthView extends React.Component {
       renderDayProps = props.onRenderDay(renderDayProps)
     }
 
-    var defaultRenderFunction = React.DOM.div
-    var renderFunction = props.renderDay || defaultRenderFunction
-
-    var result = renderFunction(renderDayProps)
-
-    if (result === undefined){
-      result = defaultRenderFunction(renderDayProps)
+    var result
+    if (props.renderDay) {
+      result = props.renderDay
+    }
+    else {
+      result = React.createElement('div', renderDayProps)
     }
 
     return result

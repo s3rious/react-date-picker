@@ -187,7 +187,7 @@ class DatePicker extends React.Component {
                 {this.renderHeader(view, props)}
 
                 <div className="dp-body" style={{flex: 1}}>
-                    {localView(viewProps)}
+                    {React.createElement(localView, viewProps)}
                 </div>
 
                 {this.renderFooter(props)}
