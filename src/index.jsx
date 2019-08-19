@@ -27,11 +27,10 @@ var Views = {
 
 function emptyFn(){}
 
-var DatePicker = React.createClass({
+class DatePicker extends React.Component {
+    static displayName = 'DatePicker';
 
-    displayName: 'DatePicker',
-
-    propTypes: {
+    static propTypes = {
         todayText: React.PropTypes.string,
         gotoSelectedText: React.PropTypes.string,
 
@@ -40,13 +39,9 @@ var DatePicker = React.createClass({
 
         date: React.PropTypes.any,
         viewDate: React.PropTypes.any
-    },
+    };
 
-    getViewOrder: function() {
-        return this.props.viewOrder || ['month', 'year', 'decade']
-    },
-
-    getDefaultProps: function() {
+    static defaultProps = function() {
         var props = assign({}, asConfig(), {
             navOnDateClick: true,
             defaultStyle: {
@@ -58,25 +53,27 @@ var DatePicker = React.createClass({
         delete props.date
 
         return props
-    },
+    }();
 
-    getInitialState: function() {
-        return {
-            view       : this.props.defaultView,
-            viewDate   : this.props.defaultViewDate,
-            defaultDate: this.props.defaultDate
-        }
-    },
+    state = {
+        view       : this.props.defaultView,
+        viewDate   : this.props.defaultViewDate,
+        defaultDate: this.props.defaultDate
+    };
 
-    getViewName: function() {
+    getViewOrder = () => {
+        return this.props.viewOrder || ['month', 'year', 'decade']
+    };
+
+    getViewName = () => {
         var view = this.props.view != null?
                     this.props.view:
                     this.state.view
 
         return view || 'month'
-    },
+    };
 
-    addViewIndex: function(amount) {
+    addViewIndex = (amount) => {
         var viewName = this.getViewName()
 
         var order = this.getViewOrder()
@@ -85,22 +82,22 @@ var DatePicker = React.createClass({
         index += amount
 
         return index % order.length
-    },
+    };
 
-    getNextViewName: function() {
+    getNextViewName = () => {
         return this.getViewOrder()[this.addViewIndex(1)]
-    },
+    };
 
-    getPrevViewName: function() {
+    getPrevViewName = () => {
         return this.getViewOrder()[this.addViewIndex(-1)]
-    },
+    };
 
-    getView: function() {
+    getView = () => {
         var views = this.props.views || Views
         return views[this.getViewName()] || views.month
-    },
+    };
 
-    getViewFactory: function() {
+    getViewFactory = () => {
         var view = this.getView()
 
         if (React.createFactory && view && view.prototype && typeof view.prototype.render == 'function'){
@@ -109,9 +106,9 @@ var DatePicker = React.createClass({
         }
 
         return view
-    },
+    };
 
-    getViewDate: function() {
+    getViewDate = () => {
         var date = hasOwn(this.props, 'viewDate')?
                         this.props.viewDate:
                         this.state.viewDate
@@ -128,9 +125,9 @@ var DatePicker = React.createClass({
         date = this.toMoment(date)
 
         return date
-    },
+    };
 
-    getDate: function() {
+    getDate = () => {
         var date
 
         if (hasOwn(this.props, 'date')){
@@ -140,9 +137,9 @@ var DatePicker = React.createClass({
         }
 
         return date? this.toMoment(date): null
-    },
+    };
 
-    render: function() {
+    render() {
 
         var props = assign({}, this.props)
 
@@ -189,13 +186,13 @@ var DatePicker = React.createClass({
                 {this.renderFooter(props)}
             </div>
         )
-    },
+    }
 
-    prepareStyle: function(props) {
+    prepareStyle = (props) => {
         return assign({}, props.defaultStyle, props.style)
-    },
+    };
 
-    renderFooter: function(props) {
+    renderFooter = (props) => {
         if (this.props.hideFooter){
             return
         }
@@ -250,24 +247,24 @@ var DatePicker = React.createClass({
                 </div>
             </div>
         )
-    },
+    };
 
-    gotoNow: function() {
+    gotoNow = () => {
         this.gotoDate(+new Date())
-    },
+    };
 
-    gotoSelected: function(props) {
+    gotoSelected = (props) => {
         this.gotoDate(props.date || +new Date())
-    },
+    };
 
-    gotoDate: function(value) {
+    gotoDate = (value) => {
 
         this.setView('month')
 
         this.setViewDate(value)
-    },
+    };
 
-    getViewColspan: function(){
+    getViewColspan = () => {
         var map = {
             month : 5,
             year  : 2,
@@ -275,9 +272,9 @@ var DatePicker = React.createClass({
         }
 
         return map[this.getViewName()]
-    },
+    };
 
-    renderHeader: function(view, props) {
+    renderHeader = (view, props) => {
 
         if (this.props.hideHeader){
             return
@@ -302,15 +299,15 @@ var DatePicker = React.createClass({
             >
             {headerText}
         </Header>
-    },
+    };
 
-    handleRenderDay: function (date) {
+    handleRenderDay = (date) => {
         return (this.props.renderDay || emptyFn)(date) || []
-    },
+    };
 
-    handleViewChange: function() {
+    handleViewChange = () => {
         this.setView(this.getNextViewName())
-    },
+    };
 
     /**
      * Use this method to set the view.
@@ -321,7 +318,7 @@ var DatePicker = React.createClass({
      * so the datepicker gets re-rendered view the new view
      *
      */
-    setView: function(view) {
+    setView = (view) => {
 
         if (typeof this.props.onViewChange == 'function'){
             this.props.onViewChange(view)
@@ -332,9 +329,9 @@ var DatePicker = React.createClass({
                 view: view
             })
         }
-    },
+    };
 
-    setViewDate: function(moment) {
+    setViewDate = (moment) => {
 
         moment = this.toMoment(moment)
 
@@ -353,9 +350,9 @@ var DatePicker = React.createClass({
                 viewDate: moment
             })
         }
-    },
+    };
 
-    getNext: function() {
+    getNext = () => {
         var current = this.getViewDate()
         var toMoment = this.toMoment
 
@@ -370,9 +367,9 @@ var DatePicker = React.createClass({
                 return toMoment(current).add(10, 'year')
             }
         })[this.getViewName()]()
-    },
+    };
 
-    getPrev: function() {
+    getPrev = () => {
         var current = this.getViewDate()
         var toMoment = this.toMoment
 
@@ -387,9 +384,9 @@ var DatePicker = React.createClass({
                 return toMoment(current).add(-10, 'year')
             }
         })[this.getViewName()]()
-    },
+    };
 
-    handleNavigation: function(direction, event) {
+    handleNavigation = (direction, event) => {
         var viewMoment = direction == -1?
                             this.getPrev():
                             this.getNext()
@@ -402,17 +399,17 @@ var DatePicker = React.createClass({
 
             this.props.onNav(text, viewMoment, view, direction, event)
         }
-    },
+    };
 
-    handleNavPrev: function(event) {
+    handleNavPrev = (event) => {
         this.handleNavigation(-1, event)
-    },
+    };
 
-    handleNavNext: function(event) {
+    handleNavNext = (event) => {
         this.handleNavigation(1, event)
-    },
+    };
 
-    handleChange: function(date, event) {
+    handleChange = (date, event) => {
         date = this.toMoment(date)
 
         if (this.props.navOnDateClick){
@@ -440,9 +437,9 @@ var DatePicker = React.createClass({
         }
 
         ;(this.props.onChange || emptyFn)(text, date, event)
-    },
+    };
 
-    handleSelect: function(date, event) {
+    handleSelect = (date, event) => {
         var viewName = this.getViewName()
 
         var property = ({
@@ -462,9 +459,8 @@ var DatePicker = React.createClass({
             var text = viewMoment.format(this.props.dateFormat)
             this.props.onSelect(text, viewMoment, view, event)
         }
-    }
-
-})
+    };
+}
 
 DatePicker.views = Views
 

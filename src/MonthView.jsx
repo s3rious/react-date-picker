@@ -13,9 +13,9 @@ var TODAY
 
 function emptyFn(){}
 
-var MonthView = React.createClass({
-
-  displayName: 'MonthView',
+class MonthView extends React.Component {
+  static displayName = 'MonthView';
+  static defaultProps = asConfig();
 
   /**
    * Formats the given date in the specified format.
@@ -27,20 +27,16 @@ var MonthView = React.createClass({
    * @return {String}
    */
 
-  formatAsDay: function(moment, dayDisplayFormat){
+  formatAsDay = (moment, dayDisplayFormat) => {
     return moment.format(dayDisplayFormat || 'D')
-  },
+  };
 
-  getDefaultProps: function() {
-    return asConfig()
-  },
-
-  getWeekStartMoment: function(value){
+  getWeekStartMoment = (value) => {
     var weekStartDay = this.weekStartDay
     var clone = this.toMoment(value).day(weekStartDay)
 
     return clone
-  },
+  };
 
   /**
    * Returns all the days in the specified month.
@@ -48,7 +44,7 @@ var MonthView = React.createClass({
    * @param  {Moment/Date/Number} value
    * @return {Moment[]}
    */
-  getDaysInMonth: function(value){
+  getDaysInMonth = (value) => {
     var first  = this.toMoment(value).startOf('month')
     var start  = this.getWeekStartMoment(first)
     var result = []
@@ -65,9 +61,9 @@ var MonthView = React.createClass({
     }
 
     return result
-  },
+  };
 
-  render: function() {
+  render() {
 
     var props = assign({}, this.props)
 
@@ -110,14 +106,14 @@ var MonthView = React.createClass({
             {this.renderDays(props, daysInView)}
         </div>
     )
-  },
+  }
 
   /**
    * Render the given array of days
    * @param  {Moment[]} days
    * @return {React.DOM}
    */
-  renderDays: function(props, days) {
+  renderDays = (props, days) => {
     var nodes = days.map(function(date){
         return this.renderDay(props, date)
     }, this)
@@ -135,9 +131,9 @@ var MonthView = React.createClass({
     return buckets.map(function(bucket, i){
       return <div key={"row" + i} className="dp-week dp-row">{bucket}</div>
     })
-  },
+  };
 
-  renderDay: function(props, date) {
+  renderDay = (props, date) => {
     var dayText = FORMAT.day(date, props.dayFormat)
     var classes = ["dp-cell dp-day"]
 
@@ -208,9 +204,9 @@ var MonthView = React.createClass({
     }
 
     return result
-  },
+  };
 
-  getWeekDayNames: function(props) {
+  getWeekDayNames = (props) => {
     props = props || this.props
 
     var names        = props.weekDayNames
@@ -231,9 +227,9 @@ var MonthView = React.createClass({
     }
 
     return names
-  },
+  };
 
-  renderWeekDayNames: function(){
+  renderWeekDayNames = () => {
     var names = this.getWeekDayNames()
 
     return (
@@ -241,9 +237,9 @@ var MonthView = React.createClass({
         {names.map( (name, index) => <div key={index} className="dp-cell dp-week-day-name">{name}</div>)}
       </div>
     )
-  },
+  };
 
-  handleClick: function(props, date, timestamp, event) {
+  handleClick = (props, date, timestamp, event) => {
     if (props.minDate && timestamp < props.minDate){
       return
     }
@@ -254,8 +250,8 @@ var MonthView = React.createClass({
     event.target.value = date
 
     ;(props.onChange || emptyFn)(date, event)
-  }
-})
+  };
+}
 
 MonthView.getHeaderText = function(moment, props) {
   return toMoment(moment, null, {locale: props.locale}).format('MMMM YYYY')

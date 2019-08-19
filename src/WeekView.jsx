@@ -3,18 +3,15 @@
 var React  = require('react')
 var moment = require('moment')
 
-module.exports = React.createClass({
+module.exports = class extends React.Component {
+    static displayName = 'WeekView';
 
-    displayName: 'WeekView',
+    static defaultProps = {
+        days: [],
+        date: null
+    };
 
-    getDefaultProps: function() {
-        return {
-            days: [],
-            date: null
-        }
-    },
-
-    getDaysForView: function(value){
+    getDaysForView = (value) => {
         var first = moment(value).startOf('month')
         var start = this.getWeekStartMoment(first)
         var result = []
@@ -31,10 +28,9 @@ module.exports = React.createClass({
         }
 
         return result
-    },
+    };
 
-
-    render: function() {
+    render() {
 
         var days = this.props.days
         var date = this.props.date
@@ -47,5 +43,4 @@ module.exports = React.createClass({
             </table>
         )
     }
-
-})
+}

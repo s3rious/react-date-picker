@@ -4,19 +4,18 @@ var React = require('react')
 var P = React.PropTypes
 var onEnter = require('./onEnter')
 
-module.exports = React.createClass({
+module.exports = class extends React.Component {
+  static displayName = 'DatePickerHeader';
 
-  displayName: 'DatePickerHeader',
-
-  propTypes: {
+  static propTypes = {
     onChange: P.func,
     onPrev  : P.func,
     onNext  : P.func,
     colspan : P.number,
     children: P.node
-  },
+  };
 
-  render: function() {
+  render() {
 
     var props = this.props
 
@@ -52,5 +51,4 @@ module.exports = React.createClass({
         </div>
       </div>
   }
-
-})
+}

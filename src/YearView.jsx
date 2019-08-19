@@ -13,14 +13,9 @@ var TODAY
 
 function emptyFn(){}
 
-var YearView = React.createClass({
-
-    displayName: 'YearView',
-
-    getDefaultProps: function() {
-
-        return asConfig()
-    },
+class YearView extends React.Component {
+    static displayName = 'YearView';
+    static defaultProps = asConfig();
 
     /**
      * Returns all the days in the specified month.
@@ -28,7 +23,7 @@ var YearView = React.createClass({
      * @param  {Moment/Date/Number} value
      * @return {Moment[]}
      */
-    getMonthsInYear: function(value){
+    getMonthsInYear = (value) => {
         var start = moment(value).startOf('year')
         var result = []
         var i = 0
@@ -39,9 +34,9 @@ var YearView = React.createClass({
         }
 
         return result
-    },
+    };
 
-    render: function() {
+    render() {
 
         TODAY = +moment().startOf('day')
 
@@ -60,14 +55,14 @@ var YearView = React.createClass({
                 {this.renderMonths(props, monthsInView)}
             </div>
         )
-    },
+    }
 
     /**
      * Render the given array of days
      * @param  {Moment[]} days
      * @return {React.DOM}
      */
-    renderMonths: function(props, days) {
+    renderMonths = (props, days) => {
         var nodes      = days.map(function(date){
             return this.renderMonth(props, date)
         }, this)
@@ -84,9 +79,9 @@ var YearView = React.createClass({
         return buckets.map(function(bucket, i){
             return <div key={"row" + i} className="dp-row">{bucket}</div>
         })
-    },
+    };
 
-    renderMonth: function(props, date) {
+    renderMonth = (props, date) => {
         var monthText = FORMAT.month(date, props.monthFormat)
         var classes = ["dp-cell dp-month"]
 
@@ -110,14 +105,14 @@ var YearView = React.createClass({
                 {monthText}
             </div>
         )
-    },
+    };
 
-    handleClick: function(props, date, event) {
+    handleClick = (props, date, event) => {
         event.target.value = date
 
         ;(props.onSelect || emptyFn)(date, event)
-    }
-})
+    };
+}
 
 YearView.getHeaderText = function(moment, props) {
     return toMoment(moment, null, { locale: props.locale }).format('YYYY')
