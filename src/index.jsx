@@ -284,7 +284,18 @@ class DatePicker extends React.Component {
         props = props || this.props
 
         var viewDate   = this.getViewDate()
-        var headerText = this.getView().getHeaderText(viewDate, props)
+        var headerText = (function () {
+          var localView = this.getView()
+
+          if (localView && localView.getHeaderText) {
+            return localView.getHeaderText(viewDate, props)
+          }
+          if (localView && localView.default && localView.default.getHeaderText) {
+            return localView.default.getHeaderText(viewDate, props)
+          }
+
+          throw new Error('BAD GUY')
+        })()
 
         var colspan = this.getViewColspan()
         var prev    = this.props.navPrev
