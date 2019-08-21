@@ -30,6 +30,8 @@
     "@babel/plugin-proposal-do-expressions",
     "@babel/plugin-proposal-function-bind",
     "@babel/plugin-transform-classes",
-    "@babel/plugin-transform-block-scoping"
+    "@babel/plugin-transform-block-scoping",
+    "@babel/plugin-transform-spread",
+    "@babel/plugin-proposal-object-rest-spread"
   ]
 }
