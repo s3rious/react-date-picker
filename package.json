@@ -64,6 +64,8 @@
     "@babel/plugin-transform-classes": "^7.5.5",
     "@babel/plugin-transform-parameters": "^7.4.4",
     "@babel/plugin-transform-spread": "^7.2.2",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-es2015": "^7.0.0-beta.53",
     "@babel/preset-react": "^7.0.0",
     "autoprefixer-loader": "^3.1.0",
     "babel-core": "^7.0.0-bridge.0",
@@ -104,6 +106,12 @@
     "type": "git",
     "url": "git+https://github.com/zippyui/react-date-picker.git"
   },
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "maintained node versions",
+    "not dead"
+  ],
   "scripts": {
     "build": "npm run build-css && npm run dist && npm run dist-nomoment && npm run dist.min && npm run dist-nomoment.min && npm run lib",
     "build-css": "npm run build-css-index && npm run build-css-base && npm run build-themes",
